@@ -5,24 +5,25 @@ using UnityEngine.AI;
 
 public class EnemyAIController : MonoBehaviour
 {
-    public Transform player;
+    public GameObject player;
 
-    private NavMeshAgent agent;
-    private Animator animator;
+    protected NavMeshAgent agent;
+    protected Animator animator;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
+        Debug.Log("EnemyAIController Update() called");
         float speed = agent.velocity.magnitude;
         animator.SetFloat("Speed", speed);
 
-        agent.SetDestination(player.position);
+        
     }
 }
