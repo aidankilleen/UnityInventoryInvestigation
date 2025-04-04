@@ -13,6 +13,7 @@ public class PathFollowingEnemyAIController : EnemyAIController
     public float pointReachedThreshold = 0.5f;
 
     private int currentPointIndex = 0;
+    private int direction = 1;
 
     protected void Start()
     {
@@ -45,16 +46,13 @@ public class PathFollowingEnemyAIController : EnemyAIController
         if (!agent.pathPending && agent.remainingDistance <= pointReachedThreshold)
         {
             // start moving to the next point
-            currentPointIndex++;
-            if (currentPointIndex < sampledPoints.Count)
+            currentPointIndex += direction;
+            if (currentPointIndex == sampledPoints.Count -1 || currentPointIndex == 0)
             {
-                agent.SetDestination(sampledPoints[currentPointIndex]);
+                direction = -direction;
             }
-            else
-            {
-                agent.isStopped = true;
-            }
-        }
 
+            agent.SetDestination(sampledPoints[currentPointIndex]);
+        }
     }
 }
