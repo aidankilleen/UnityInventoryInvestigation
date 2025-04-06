@@ -14,6 +14,8 @@ public class PatrolingEnemyController : MonoBehaviour
     public float pointReachedThreshold = 0.5f;
 
     private int currentPointIndex = 0;
+    private int direction = 1;
+
 
     private NavMeshAgent agent;
 
@@ -52,7 +54,8 @@ public class PatrolingEnemyController : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance <= pointReachedThreshold)
         {
             // start moving to the next point
-            currentPointIndex++;
+            currentPointIndex += direction;
+
             if (currentPointIndex < sampledPoints.Count)
             {
                 agent.SetDestination(sampledPoints[currentPointIndex]);
