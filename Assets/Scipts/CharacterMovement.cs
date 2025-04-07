@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class CharacterMovement : MonoBehaviour
 {
+    public GameManagerWithInventory gameManager;
     public float moveSpeed = 5f;
     public float rotationSpeed = 10f;
 
@@ -42,4 +43,39 @@ public class CharacterMovement : MonoBehaviour
         Vector3 moveDirection = transform.forward * moveInput * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + moveDirection);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Triggered with: " + other.gameObject.name);
+        if (other.CompareTag("Inventory"))
+        {
+            string itemName = other.gameObject.name;
+            gameManager.AddItem(itemName);
+            Destroy(other.gameObject); // Remove the item from the scene
+        }
+
+        if (other.CompareTag("portal"))
+        {
+            // check if we have apple and cake in inventory.
+
+            if (gameManager.HasItem("apple") && gameManager.HasItem("cake"))
+            {
+                Destroy(other.gameObject);
+                // load next scene
+                Debug.Log("Loading next scene...");
+                gameManager.ActivateTrigger("portal");
+                // Load the next scene here
+            }
+            else
+            {
+                Debug.Log("You need an apple and a cake to enter the portal.");
+            }
+        }
+        if(other.CompareTag("Finish"))
+        {
+            Destroy(other.gameObject);
+            Debug.Log("Finished");
+        }
+    }
+
 }
