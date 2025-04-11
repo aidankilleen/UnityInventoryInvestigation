@@ -71,11 +71,33 @@ public class CharacterMovement : MonoBehaviour
                 Debug.Log("You need an apple and a cake to enter the portal.");
             }
         }
-        if(other.CompareTag("Finish"))
+        if (other.CompareTag("Finish"))
         {
             Destroy(other.gameObject);
             Debug.Log("Finished");
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("portal"))
+        {
+            // Handle collision with obstacle
+            Debug.Log("Collided with: " + collision.gameObject.name);
+            // You can add more logic here, like playing a sound or animation
+            if (gameManager.HasItem("apple") && gameManager.HasItem("cake"))
+            {
+                Destroy(collision.gameObject);
+                // load next scene
+                Debug.Log("Loading next scene...");
+                gameManager.ActivateTrigger("portal");
+                // Load the next scene here
+            }
+            else
+            {
+                Debug.Log("You need an apple and a cake to enter the portal.");
+            }
+        }
+
+    }
 }

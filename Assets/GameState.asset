@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3081ade8d78564da02b5a113cf43e6, type: 3}
   m_Name: GameState
   m_EditorClassIdentifier: 
-  inventoryItems: []
+  inventoryItems:
+  - apple
+  - cake
   activatedTriggers: []
