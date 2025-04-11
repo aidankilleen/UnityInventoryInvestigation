@@ -15,4 +15,5 @@ MonoBehaviour:
   inventoryItems:
   - apple
   - cake
-  activatedTriggers: []
+  activatedTriggers:
+  - portal
