@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
@@ -78,8 +80,27 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+
+    private IEnumerator ReloadSceneAfterDelay()
+    {
+        yield return new WaitForSeconds(2f); // Wait for 2 seconds
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("sawblade"))
+        {
+            // Handle collision with obstacle
+            Debug.Log("Collided with: " + collision.gameObject.name);
+            // You can add more logic here, like playing a sound or animation
+
+            //StartCoroutine(ReloadSceneAfterDelay());
+
+            rb.AddExplosionForce(50f, collision.transform.position, 10f, 2f, ForceMode.Impulse);
+           
+        }
+
+
         if (collision.gameObject.CompareTag("portal"))
         {
             // Handle collision with obstacle
